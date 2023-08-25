@@ -1,0 +1,37 @@
+.tw-followCard {
+  display: flex;
+  align-items: center;
+  color: aliceblue;
+  font-size: 0.8rem;
+  justify-content: space-between;
+}
+
+.tw-followCard-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tw-followCard-header-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.tw-followCard-header-div span {
+  opacity: 0.6;
+}
+
+.tw-followCard-header-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 100px;
+  margin-right: 12px;
+}
+
+.tw-followCard-aside button {
+  margin-left: 16px;
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-weight: bold;
+}
