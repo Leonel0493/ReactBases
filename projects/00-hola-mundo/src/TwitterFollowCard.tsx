@@ -1,13 +1,25 @@
+import React, { useState } from 'react'
+
 interface Props {
   userName: string
-  name: string
-  isFollowing?: boolean
+  children: React.ReactNode
+  initialIsFollowing: boolean
 }
 
 export function TwitterFollowCard(props: Props) {
-  const { userName, name, isFollowing } = props
+  const { userName, children, initialIsFollowing } = props
+  const [isFollowing, setIsFollowing] = useState(initialIsFollowing)
 
-  console.log(isFollowing)
+  const text = isFollowing ? 'Siguiendo' : 'Seguir'
+  const buttonClassName = isFollowing
+    ? 'tw-followCard-aside-btn is-following'
+    : 'tw-followCard-aside-btn'
+
+  const handleClick = () => {
+    setIsFollowing(!isFollowing)
+  }
+
+  console.log('[TwitterFollowCard] render with: ', children)
 
   return (
     <article className="tw-followCard">
@@ -18,13 +30,15 @@ export function TwitterFollowCard(props: Props) {
           alt="user avatar"
         />
         <div className="tw-followCard-header-div">
-          <strong>{name}</strong>
+          <strong>{children}</strong>
           <span>@{userName}</span>
         </div>
       </header>
 
       <aside className="tw-followCard-aside">
-        <button>Seguir</button>
+        <button className={buttonClassName} onClick={handleClick}>
+          {text}
+        </button>
       </aside>
     </article>
   )
