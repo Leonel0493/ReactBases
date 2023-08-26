@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { TwitterFollowCard } from './TwitterFollowCard'
 import './app.css'
 
