@@ -2,29 +2,50 @@ import { useState } from 'react'
 import { TwitterFollowCard } from './TwitterFollowCard'
 import './app.css'
 
+interface ITwiterUser {
+  userName: string
+  names: string
+  initialIsFollowing: boolean
+}
+
+const TwitterUsers: ITwiterUser[] = [
+  {
+    userName: 'leon04_',
+    names: 'Leonel Rivas',
+    initialIsFollowing: false,
+  },
+  {
+    userName: 'midudev',
+    names: 'Miguel Ángel Durán',
+    initialIsFollowing: false,
+  },
+  {
+    userName: 'DeJongFrenkie21',
+    names: 'Frenkie de Jon',
+    initialIsFollowing: false,
+  },
+  {
+    userName: 'IlkayGuendogan',
+    names: 'Ilkay Gündogan',
+    initialIsFollowing: true,
+  },
+]
+
 export function App() {
-  const [name, setName] = useState('Leonel Rivas')
-
-  const handleClick = () => {
-    setName('Marvin Rivas')
-  }
-
-  console.log('Start app with: ', name)
   return (
     <div className="App">
-      <TwitterFollowCard userName="Leon04_" initialIsFollowing={false}>
-        {name}
-      </TwitterFollowCard>
-      <TwitterFollowCard userName="midudev" initialIsFollowing={false}>
-        Miguel Angel Duran
-      </TwitterFollowCard>
-      <TwitterFollowCard userName="DeJongFrenkie21" initialIsFollowing={false}>
-        Frenkie de Jon
-      </TwitterFollowCard>
-      <TwitterFollowCard userName="IlkayGuendogan" initialIsFollowing>
-        Ilkay Gündogan
-      </TwitterFollowCard>
-      <button onClick={handleClick}>Cambiar nombre</button>
+      {TwitterUsers.map((user: ITwiterUser) => {
+        const { userName, names, initialIsFollowing } = user
+
+        return (
+          <TwitterFollowCard
+            userName={userName}
+            initialIsFollowing={initialIsFollowing}
+          >
+            {names}
+          </TwitterFollowCard>
+        )
+      })}
     </div>
   )
 }
