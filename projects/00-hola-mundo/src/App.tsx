@@ -39,6 +39,7 @@ export function App() {
 
         return (
           <TwitterFollowCard
+            key={userName}
             userName={userName}
             initialIsFollowing={initialIsFollowing}
           >
