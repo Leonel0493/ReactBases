@@ -74,9 +74,16 @@ function App() {
     return null
   }
 
+  const handleRestarGame = () => {
+    setBoard(Array(9).fill(null))
+    setGame(GAME_STATUS.Start)
+    setTurn(TURNS.X)
+  }
+
   return (
     <main className="board">
       <h1>Tic Tac Toe</h1>
+      <button onClick={handleRestarGame}>Empezar de nuevo</button>
       <section className="game">
         {board.map((_, index) => {
           return (
@@ -91,6 +98,24 @@ function App() {
         <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
+
+      {game !== GAME_STATUS.Start && game !== GAME_STATUS.Loser && (
+        <section className="winner">
+          <div className="text">
+            <h2>{game === GAME_STATUS.Tie ? 'Empate' : 'Gano: '}</h2>
+            {game !== GAME_STATUS.Tie && (
+              <header className="win">
+                <Square>
+                  {game === GAME_STATUS.Winner_X ? TURNS.X : TURNS.O}
+                </Square>
+              </header>
+            )}
+            <footer>
+              <button onClick={handleRestarGame}>Empezar de nuevo</button>
+            </footer>
+          </div>
+        </section>
+      )}
     </main>
   )
 }
