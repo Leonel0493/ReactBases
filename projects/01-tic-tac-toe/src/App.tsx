@@ -1,6 +1,13 @@
 import { useState } from 'react'
+import confetti from 'canvas-confetti'
+
+// * import own functions and const
+import { checkTai, checkWinner } from './utils/board.utils'
 import { GAME_STATUS, TURNS } from './types/GamesTypes'
+
+// * import components
 import Square from './components/Square'
+import WinnerModal from './components/WinnerModal'
 
 function App() {
   // * Declare all states
@@ -28,50 +35,20 @@ function App() {
 
   const UpdateGameState = (board: (TURNS | null)[]) => {
     // * Validate if the game is tai
-    if (board.every((value) => value !== null)) setGame(GAME_STATUS.Tie)
+    if (checkTai(board)) setGame(GAME_STATUS.Tie)
 
     // * validate if the game is end
     const winner = checkWinner(board)
 
+    // * save current game
+
+    // * check if we have a winner
     if (winner !== null) {
+      confetti()
       winner === TURNS.X
         ? setGame(GAME_STATUS.Winner_X)
         : setGame(GAME_STATUS.Winner_O)
     }
-  }
-
-  const checkWinner = (board: (TURNS | null)[]): TURNS | null => {
-    const size = 3
-
-    // * Check horizontal and vertical lines
-    for (let i = 0; i < size; i++) {
-      if (
-        board[i * size] !== null &&
-        board[i * size] === board[i * size + 1] &&
-        board[i * size] === board[i * size + 2]
-      ) {
-        return board[i * size] as TURNS
-      }
-
-      if (
-        board[i] &&
-        board[i] === board[i + size] &&
-        board[i] === board[(i + 2) * size]
-      ) {
-        return board[i] as TURNS
-      }
-    }
-
-    // * check diagonals
-    if (board[0] && board[0] === board[4] && board[0] === board[8]) {
-      return board[0] as TURNS
-    }
-
-    if (board[2] && board[2] === board[4] && board[2] === board[6]) {
-      return board[2] as TURNS
-    }
-
-    return null
   }
 
   const handleRestarGame = () => {
@@ -99,23 +76,7 @@ function App() {
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
 
-      {game !== GAME_STATUS.Start && game !== GAME_STATUS.Loser && (
-        <section className="winner">
-          <div className="text">
-            <h2>{game === GAME_STATUS.Tie ? 'Empate' : 'Gano: '}</h2>
-            {game !== GAME_STATUS.Tie && (
-              <header className="win">
-                <Square>
-                  {game === GAME_STATUS.Winner_X ? TURNS.X : TURNS.O}
-                </Square>
-              </header>
-            )}
-            <footer>
-              <button onClick={handleRestarGame}>Empezar de nuevo</button>
-            </footer>
-          </div>
-        </section>
-      )}
+      <WinnerModal game={game} handleRestarGame={handleRestarGame} />
     </main>
   )
 }

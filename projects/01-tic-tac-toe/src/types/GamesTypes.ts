@@ -1,6 +1,6 @@
 export enum TURNS {
-  X = 'X',
-  O = 'O',
+  X = '❌',
+  O = '⚪',
 }
 
 export enum GAME_STATUS {
